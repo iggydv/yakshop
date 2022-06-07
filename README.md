@@ -2,6 +2,10 @@
 
 Repository containing all the source code for _Yakshop_, the Tundra's first home-grown webshop for all your yak produce.
 
+## Project Kanban Board
+
+[Project Kanban Board](https://trello.com/b/Vzj6KVcx/yakshop)
+
 ## Prerequisite
 - [Docker](https://docs.docker.com/get-docker/)
 - [Maven3](https://maven.apache.org/install.html)
