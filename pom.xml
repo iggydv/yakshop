@@ -203,6 +203,7 @@
 							<inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
 							<modelPackage>com.xebia.api.models</modelPackage>
 							<configOptions>
+								<additionalModelTypeAnnotations>@lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor</additionalModelTypeAnnotations>
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<interfaceOnly>true</interfaceOnly>
 								<delegatePattern>true</delegatePattern>

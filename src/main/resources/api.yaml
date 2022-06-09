@@ -16,22 +16,114 @@ paths:
       summary: Load a new herd and reset the database
       operationId: loadHerd
       responses:
-        '200':
-          description: object stored successfully
+        '205':
+          description: herd loaded successfully
         '400':
           description: invalid input, object invalid
-        '500':
-          description: server error
       requestBody:
         content:
           application/xml:
             schema:
-              $ref: '#/components/schemas/Herd'
+              $ref: '#/components/schemas/HerdRq'
         description: game Object to add
+
+  /yak-shop/stock/{T}:
+    get:
+      summary: retrieve total stock at day T
+      operationId: getStock
+      parameters:
+        - name: T
+          in: path
+          required: true
+          description: day
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100000
+            example: 5
+      responses:
+        '200':
+          description: stock retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockRs'
+        '400':
+          description: invalid input
+        '404':
+          description: object does not exist
+
+  /yak-shop/herd/{T}:
+    get:
+      summary: retrieve a view of the herd at day T
+      operationId: getHerdStatus
+      parameters:
+        - name: T
+          in: path
+          required: true
+          description: day
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100000
+            example: 5
+      responses:
+        '200':
+          description: stock retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockRs'
+        '400':
+          description: invalid input
+        '404':
+          description: object does not exist
+
+  /yak-shop/order/{T}:
+    post:
+      summary: Load a new herd and reset the database
+      operationId: order
+      parameters:
+        - name: T
+          in: path
+          required: true
+          description: day
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100000
+            example: 5
+      responses:
+        '201':
+          description: order placed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '206':
+          description: only part of the order was acceptd.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: full order not in stock.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        description: order items
 
 components:
   schemas:
-    LabYak:
+    Sex:
+      type: string
+      enum: [m, f]
+    LabYakRq:
       type: object
       required:
         - name
@@ -39,24 +131,23 @@ components:
         - sex
       properties:
         name:
+          description: yak name
           type: string
           xml:
             name: 'name'
           minLength: 1
           example: Lilly
         age:
-          description: Creation time in seconds (unix time)
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 10
-          example: 5
+          description: yak age
+          type: number
+          format: double
+          minimum: 0.00
+          maximum: 10.00
+          example: 5.12
         sex:
-          description: Creation time in seconds (unix time)
-          type: string
-          maxLength: 1
-          example: f
-    Herd:
+          description: yak gender
+          $ref: '#/components/schemas/Sex'
+    HerdRq:
       type: object
       required:
         - herd
@@ -66,4 +157,74 @@ components:
           xml:
             name: 'herd'
           items:
-            $ref: '#/components/schemas/LabYak'
+            $ref: '#/components/schemas/LabYakRq'
+    StockRs:
+      type: object
+      required:
+        - milk
+        - skins
+      properties:
+        milk:
+          description: Total amount of milk in stock
+          type: number
+          format: double
+          minimum: 0.0
+          example: 1104.48
+        skins:
+          description: Total amount of skins in stock
+          type: integer
+          format: int64
+          minimum: 0
+          example: 5
+    LabYakRs:
+      type: object
+      required:
+        - name
+        - age
+        - age-last-shaved
+      properties:
+        name:
+          type: string
+          xml:
+            name: 'name'
+          minLength: 1
+          example: Lilly
+        age:
+          description: yak age
+          type: number
+          format: double
+          minimum: 0.00
+          maximum: 10.00
+          example: 5.12
+        age-last-shaved:
+          description: the day on which the yak was last shaved
+          type: number
+          format: double
+          minimum: 0.00
+          example: 5.12
+    HerdStatus:
+      type: object
+      required:
+        - herd
+      properties:
+        herd:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabYakRs'
+    Order:
+      type: object
+      properties:
+        milk:
+          nullable: true
+          description: Total amount of milk in stock
+          type: number
+          format: double
+          minimum: 0.0
+          example: 1104.48
+        skins:
+          nullable: true
+          description: Total amount of skins in stock
+          type: integer
+          format: int64
+          minimum: 0
+          example: 5

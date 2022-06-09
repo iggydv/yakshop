@@ -1,6 +1,6 @@
-package com.xebia.yakshop.api;
+package com.xebia.yakshop.service;
 
-import com.xebia.api.models.Herd;
+import com.xebia.api.models.HerdRq;
 import com.xebia.yakshop.models.HerdInternal;
 import com.xebia.yakshop.models.mappers.HerdMapper;
 import org.openapitools.api.YakShopApi;
@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class YakShopController implements YakShopApi {
-    @Override
-    public ResponseEntity<Void> loadHerd(Herd herd) {
+    private HerdInternal herd;
 
-        HerdInternal herdInternal = HerdMapper.INSTANCE.toInternalModel(herd);
-        System.out.println(herdInternal);
+    @Override
+    public ResponseEntity<Void> loadHerd(HerdRq herdRq) {
+
+        herd = HerdMapper.INSTANCE.toInternalModel(herdRq);
+        System.out.println(herd);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
