@@ -22,11 +22,12 @@ import java.util.stream.Collectors;
 @Log4j2
 public class YakShopController implements YakShopApi {
     private HerdInternal herd;
+    private final HerdMapper herdMapper = new HerdMapper();
 
     @Override
     public ResponseEntity<Void> loadHerd(List<LabYakRq> herdRq) {
         try {
-            herd = HerdInternal.builder().herd(herdRq.stream().map(LabYakMapper.INSTANCE::toInternalModel).collect(Collectors.toList())).build();
+            herd = herdMapper.toInternalModel(herdRq);
             log.info("New herd loaded: {}", herd);
         } catch (Exception e) {
             log.error("Invalid load herd request: {}", herd);

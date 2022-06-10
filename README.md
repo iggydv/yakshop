@@ -27,8 +27,8 @@ curl -X 'POST' \
   -H 'Content-Type: application/xml' \
   -d '<?xml version="1.0" encoding="UTF-8"?>
 <herd>
-<labyak name="Betty-1" age="4"/>
-<labyak name="Betty-2" age="8" sex="f"  gen="gg" />
-<labyak name="Betty-3" age="9.5" sex="f" gen="gg" />
+<labyak name="Betty-1" age="4" sex="f"/>
+<labyak name="Betty-2" age="8" sex="f"/>
+<labyak name="Betty-3" age="9.5" sex="f"/>
 </herd>'
 ```

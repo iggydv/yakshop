@@ -7,7 +7,7 @@ public enum SexInternal {
 
     public final String label;
 
-    private SexInternal(String label) {
+    SexInternal(String label) {
         this.label = label;
     }
 }
