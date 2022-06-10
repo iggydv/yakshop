@@ -16,3 +16,19 @@ Repository containing all the source code for _Yakshop_, the Tundra's first home
 http -> git clone https://github.com/xebia/yakshop-iggydv.git
 ssh  -> git clone git@github.com:xebia/yakshop-iggydv.git
 ```
+
+## API 
+
+**Load new herd**
+```shell
+curl -X 'POST' \
+  'http://localhost:8080/yak-shop/load' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<herd>
+<labyak name="Betty-1" age="4" sex="f"/>
+<labyak name="Betty-2" age="8" sex="f"/>
+<labyak name="Betty-3" age="9.5" sex="f"/>
+</herd>'
+```
