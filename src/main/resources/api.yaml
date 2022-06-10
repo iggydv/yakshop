@@ -1,9 +1,9 @@
 openapi: 3.0.3
 
 info:
-  description: "Nomad Storage operations for peers"
+  description: "YakShop API"
   version: "1.0.0"
-  title: Nomad API
+  title: YakShop API
   contact:
     email: iggydv12@gmail.com
   license:
@@ -21,11 +21,12 @@ paths:
         '400':
           description: invalid input, object invalid
       requestBody:
+        description: Herd in XML format to load
+        required: true
         content:
           application/xml:
             schema:
-              $ref: '#/components/schemas/HerdRq'
-        description: game Object to add
+              $ref: '#/components/schemas/herdRq'
 
   /yak-shop/stock/{T}:
     get:
@@ -48,7 +49,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockRs'
+                $ref: '#/components/schemas/stockRs'
         '400':
           description: invalid input
         '404':
@@ -57,7 +58,7 @@ paths:
   /yak-shop/herd/{T}:
     get:
       summary: retrieve a view of the herd at day T
-      operationId: getHerdStatus
+      operationId: getherdStatus
       parameters:
         - name: T
           in: path
@@ -75,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StockRs'
+                $ref: '#/components/schemas/stockRs'
         '400':
           description: invalid input
         '404':
@@ -102,29 +103,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/order'
         '206':
           description: only part of the order was acceptd.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/order'
         '404':
           description: full order not in stock.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/order'
         description: order items
 
 components:
   schemas:
     Sex:
       type: string
+      xml:
+        name: 'sex'
+        attribute: true
       enum: [m, f]
-    LabYakRq:
+    labYakRq:
       type: object
+      xml:
+        name: 'labyak'
       required:
         - name
         - age
@@ -135,11 +141,15 @@ components:
           type: string
           xml:
             name: 'name'
+            attribute: true
           minLength: 1
           example: Lilly
         age:
           description: yak age
           type: number
+          xml:
+            name: 'age'
+            attribute: true
           format: double
           minimum: 0.00
           maximum: 10.00
@@ -147,18 +157,16 @@ components:
         sex:
           description: yak gender
           $ref: '#/components/schemas/Sex'
-    HerdRq:
-      type: object
-      required:
-        - herd
-      properties:
-        herd:
-          type: array
-          xml:
-            name: 'herd'
-          items:
-            $ref: '#/components/schemas/LabYakRq'
-    StockRs:
+    herdRq:
+      type: array
+#      required:
+#        - herd
+      xml:
+        wrapped: true
+      items:
+        $ref: '#/components/schemas/labYakRq'
+
+    stockRs:
       type: object
       required:
         - milk
@@ -176,7 +184,7 @@ components:
           format: int64
           minimum: 0
           example: 5
-    LabYakRs:
+    labYakRs:
       type: object
       required:
         - name
@@ -202,7 +210,7 @@ components:
           format: double
           minimum: 0.00
           example: 5.12
-    HerdStatus:
+    herdStatus:
       type: object
       required:
         - herd
@@ -210,8 +218,8 @@ components:
         herd:
           type: array
           items:
-            $ref: '#/components/schemas/LabYakRs'
-    Order:
+            $ref: '#/components/schemas/labYakRs'
+    order:
       type: object
       properties:
         milk:

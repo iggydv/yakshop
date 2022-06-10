@@ -1,11 +1,14 @@
 package com.xebia.yakshop.models.mappers;
 
-import com.xebia.api.models.HerdRq;
+//import com.xebia.api.models.HerdRq;
+import com.xebia.api.models.LabYakRq;
 import com.xebia.yakshop.models.HerdInternal;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper(uses = LabYakMapper.class,
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -13,6 +16,6 @@ import org.mapstruct.factory.Mappers;
 public interface HerdMapper {
     HerdMapper INSTANCE = Mappers.getMapper(HerdMapper.class);
 
-    HerdRq toApiModel(HerdInternal source);
-    HerdInternal toInternalModel(HerdRq source);
+//    HerdRq toApiModel(HerdInternal source);
+//    HerdInternal toInternalModel(List<LabYakRq> source);
 }
