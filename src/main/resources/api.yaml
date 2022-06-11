@@ -39,7 +39,7 @@ paths:
           description: day
           schema:
             type: integer
-            format: int64
+            format: int32
             minimum: 1
             maximum: 100000
             example: 5
@@ -58,7 +58,7 @@ paths:
   /yak-shop/herd/{T}:
     get:
       summary: retrieve a view of the herd at day T
-      operationId: getherdStatus
+      operationId: getHerdStatus
       parameters:
         - name: T
           in: path
@@ -66,7 +66,7 @@ paths:
           description: day
           schema:
             type: integer
-            format: int64
+            format: int32
             minimum: 1
             maximum: 100000
             example: 5
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/stockRs'
+                $ref: '#/components/schemas/herdStatus'
         '400':
           description: invalid input
         '404':
@@ -159,8 +159,8 @@ components:
           $ref: '#/components/schemas/Sex'
     herdRq:
       type: array
-#      required:
-#        - herd
+      required:
+        - herd
       xml:
         wrapped: true
       items:
@@ -181,7 +181,7 @@ components:
         skins:
           description: Total amount of skins in stock
           type: integer
-          format: int64
+          format: int32
           minimum: 0
           example: 5
     labYakRs:
@@ -193,8 +193,6 @@ components:
       properties:
         name:
           type: string
-          xml:
-            name: 'name'
           minLength: 1
           example: Lilly
         age:
@@ -233,6 +231,6 @@ components:
           nullable: true
           description: Total amount of skins in stock
           type: integer
-          format: int64
+          format: int32
           minimum: 0
           example: 5

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Scope("singleton")
+@Component
 public class HerdInternal {
     @Builder.Default
     List<LabYakInternal> herd = new ArrayList<>();
@@ -27,8 +29,14 @@ public class HerdInternal {
     public int calculateTotalSkinsForPeriod(int T) {
         int total = 0;
         for (LabYakInternal yak : herd) {
-            total += yak.hidesProducedOverTime(T);
+            int skins = yak.skinsProducedOverTime(T);
+            total += skins;
         }
         return total;
     }
+
+    public void calculateAgeLastShaved(int T) {
+        herd.forEach(labYakInternal -> labYakInternal.calculateAgeLastShaved(T));
+    }
+
 }
