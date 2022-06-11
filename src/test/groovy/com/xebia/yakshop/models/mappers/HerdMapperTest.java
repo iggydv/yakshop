@@ -1,8 +1,8 @@
 package com.xebia.yakshop.models.mappers;
 
-import com.xebia.api.models.LabYakRq;
-import com.xebia.api.models.Sex;
 import com.xebia.yakshop.models.HerdInternal;
+import com.xebia.yakshop.models.LabYakRq;
+import com.xebia.yakshop.models.Sex;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -10,15 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class HerdMapperTest {
 
     private final HerdMapper mapper = new HerdMapper();
-
-    @Test
-    void toApiModel() {
-    }
 
     @Test
     void test_empty_mapping() {
@@ -40,12 +35,12 @@ class HerdMapperTest {
     @Test
     void test_to_internal_mapping_multiple_items() {
         List<LabYakRq> external = List.of(
-                        LabYakRq.builder().age(3.0).name("Phoebe").sex(Sex.F).build(),
-                        LabYakRq.builder().age(2.0).name("Joey").sex(Sex.M).build(),
-                        LabYakRq.builder().age(2.2).name("Ross").sex(Sex.M).build(),
-                        LabYakRq.builder().age(1.2).name("Rachel").sex(Sex.F).build(),
-                        LabYakRq.builder().age(1.8).name("Monica").sex(Sex.F).build(),
-                        LabYakRq.builder().age(2.3).name("Chandler").sex(Sex.M).build());
+                LabYakRq.builder().age(3.0).name("Phoebe").sex(Sex.F).build(),
+                LabYakRq.builder().age(2.0).name("Joey").sex(Sex.M).build(),
+                LabYakRq.builder().age(2.2).name("Ross").sex(Sex.M).build(),
+                LabYakRq.builder().age(1.2).name("Rachel").sex(Sex.F).build(),
+                LabYakRq.builder().age(1.8).name("Monica").sex(Sex.F).build(),
+                LabYakRq.builder().age(2.3).name("Chandler").sex(Sex.M).build());
 
         HerdInternal result = mapper.toInternalModel(external);
         assertEquals(6, result.getHerd().size());
