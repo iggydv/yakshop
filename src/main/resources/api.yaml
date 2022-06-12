@@ -39,7 +39,7 @@ paths:
           description: day
           schema:
             type: integer
-            format: int64
+            format: int32
             minimum: 1
             maximum: 100000
             example: 5
@@ -49,7 +49,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/stockRs'
+                $ref: '#/components/schemas/stock'
         '400':
           description: invalid input
         '404':
@@ -58,7 +58,7 @@ paths:
   /yak-shop/herd/{T}:
     get:
       summary: retrieve a view of the herd at day T
-      operationId: getherdStatus
+      operationId: getHerdStatus
       parameters:
         - name: T
           in: path
@@ -66,7 +66,7 @@ paths:
           description: day
           schema:
             type: integer
-            format: int64
+            format: int32
             minimum: 1
             maximum: 100000
             example: 5
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/stockRs'
+                $ref: '#/components/schemas/herdStatus'
         '400':
           description: invalid input
         '404':
@@ -93,7 +93,7 @@ paths:
           description: day
           schema:
             type: integer
-            format: int64
+            format: int32
             minimum: 1
             maximum: 100000
             example: 5
@@ -103,13 +103,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/order'
+                $ref: '#/components/schemas/stock'
         '206':
-          description: only part of the order was acceptd.
+          description: only part of the order was acceptd (Deliverable oreder items will be present in the response body)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/order'
+                $ref: '#/components/schemas/stock'
         '404':
           description: full order not in stock.
       requestBody:
@@ -159,14 +159,14 @@ components:
           $ref: '#/components/schemas/Sex'
     herdRq:
       type: array
-#      required:
-#        - herd
+      required:
+        - herd
       xml:
         wrapped: true
       items:
         $ref: '#/components/schemas/labYakRq'
 
-    stockRs:
+    stock:
       type: object
       required:
         - milk
@@ -177,13 +177,28 @@ components:
           type: number
           format: double
           minimum: 0.0
-          example: 1104.48
+          example: 100.00
         skins:
           description: Total amount of skins in stock
           type: integer
-          format: int64
+          format: int32
           minimum: 0
-          example: 5
+          example: 1
+
+    order:
+      type: object
+      required:
+        - customer
+        - stock
+      properties:
+        customer:
+          type: string
+          minLength: 1
+          example: YakMan
+        stock:
+          description: Total amount of skins/milk the customer wishes to order
+          $ref: '#/components/schemas/stock'
+
     labYakRs:
       type: object
       required:
@@ -193,8 +208,6 @@ components:
       properties:
         name:
           type: string
-          xml:
-            name: 'name'
           minLength: 1
           example: Lilly
         age:
@@ -219,20 +232,3 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/labYakRs'
-    order:
-      type: object
-      properties:
-        milk:
-          nullable: true
-          description: Total amount of milk in stock
-          type: number
-          format: double
-          minimum: 0.0
-          example: 1104.48
-        skins:
-          nullable: true
-          description: Total amount of skins in stock
-          type: integer
-          format: int64
-          minimum: 0
-          example: 5

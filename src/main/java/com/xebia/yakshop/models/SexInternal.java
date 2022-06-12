@@ -1,7 +1,6 @@
 package com.xebia.yakshop.models;
 
 public enum SexInternal {
-
     M("m"),
     F("f");
 
