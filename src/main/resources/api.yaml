@@ -127,6 +127,7 @@ components:
         name: 'sex'
         attribute: true
       enum: [m, f]
+
     labYakRq:
       type: object
       xml:
@@ -157,6 +158,32 @@ components:
         sex:
           description: yak gender
           $ref: '#/components/schemas/Sex'
+
+    labYakRs:
+      type: object
+      required:
+        - name
+        - age
+        - age-last-shaved
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Lilly
+        age:
+          description: yak age
+          type: number
+          format: double
+          minimum: 0.00
+          maximum: 10.00
+          example: 5.12
+        age-last-shaved:
+          description: the day on which the yak was last shaved
+          type: number
+          format: double
+          minimum: 0.00
+          example: 5.12
+
     herdRq:
       type: array
       required:
@@ -199,30 +226,6 @@ components:
           description: Total amount of skins/milk the customer wishes to order
           $ref: '#/components/schemas/stock'
 
-    labYakRs:
-      type: object
-      required:
-        - name
-        - age
-        - age-last-shaved
-      properties:
-        name:
-          type: string
-          minLength: 1
-          example: Lilly
-        age:
-          description: yak age
-          type: number
-          format: double
-          minimum: 0.00
-          maximum: 10.00
-          example: 5.12
-        age-last-shaved:
-          description: the day on which the yak was last shaved
-          type: number
-          format: double
-          minimum: 0.00
-          example: 5.12
     herdStatus:
       type: object
       required:

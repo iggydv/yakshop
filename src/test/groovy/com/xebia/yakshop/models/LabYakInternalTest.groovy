@@ -1,12 +1,10 @@
 package com.xebia.yakshop.models
 
-import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class LabYakInternalTest extends Specification {
 
-    def "calculate milk produced for the day"() {
+    def "should be able to calculate milk produced for a specific day"() {
         given:
         def testYak = LabYakInternal.builder().name("Cloe").age(age).sex(SexInternal.F).build()
 
@@ -29,7 +27,7 @@ class LabYakInternalTest extends Specification {
         10.00 | 0   | 0.0
     }
 
-    def "calculate when a yak can be shaved"() {
+    def "should be able to calculate when a yak can be shaved"() {
         given:
         def testYak = LabYakInternal.builder().name("Cloe").age(age).sex(SexInternal.F).build()
 
@@ -56,7 +54,7 @@ class LabYakInternalTest extends Specification {
         10.00 | 0   | false
     }
 
-    def "calculate milk produced over time"() {
+    def "should be able to calculate milk produced over time"() {
         given:
         def yakFemale1 = LabYakInternal.builder().name("Cloe").age(4.0).sex(SexInternal.F).build()
         def yakFemale2 = LabYakInternal.builder().name("Cloe-1").age(1.0).sex(SexInternal.F).build()
@@ -86,8 +84,7 @@ class LabYakInternalTest extends Specification {
         610 | 17409.0            | 23097.65           | 0.0
     }
 
-    @Unroll
-    def "calculate skins produced over time"() {
+    def "should be able to calculate skins produced over time"() {
         given:
         def yakFemale1 = LabYakInternal.builder().name("Cloe").age(4.0).sex(SexInternal.F).build()
         def yakFemale2 = LabYakInternal.builder().age(9.5).name("Betty-3").sex(SexInternal.F).build()

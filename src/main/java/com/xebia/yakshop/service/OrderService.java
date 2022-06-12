@@ -41,6 +41,7 @@ public class OrderService {
             result.milk(milkOrder);
             updatedStock.milk(milkOrderHistory + milkOrder);
         }
+
         if (actualSkinStock >= skinsOrder) {
             result.skins(skinsOrder);
             updatedStock.skins(skinsOrderHistory + skinsOrder);

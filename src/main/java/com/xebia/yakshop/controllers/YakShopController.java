@@ -1,7 +1,6 @@
-package com.xebia.yakshop.service;
+package com.xebia.yakshop.controllers;
 
 import com.xebia.yakshop.models.HerdStatus;
-import com.xebia.yakshop.storage.HerdStorageImpl;
 import com.xebia.yakshop.models.LabYakRq;
 import com.xebia.yakshop.models.Order;
 import com.xebia.yakshop.models.OrderInternal;
@@ -10,6 +9,8 @@ import com.xebia.yakshop.models.StockInternal;
 import com.xebia.yakshop.models.mappers.HerdMapper;
 import com.xebia.yakshop.models.mappers.OrderMapper;
 import com.xebia.yakshop.models.mappers.StockMapper;
+import com.xebia.yakshop.service.OrderService;
+import com.xebia.yakshop.storage.HerdStorageImpl;
 import lombok.extern.log4j.Log4j2;
 import org.openapitools.api.YakShopApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class YakShopController implements YakShopApi {
             orderService.setHerd(herd);
             log.info("New herd loaded: {}", herd);
         } catch (Exception e) {
-            log.error("Invalid load herd request: {}", herd);
+            log.error("Invalid load herd request: {} - {}", herd, e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -73,8 +74,18 @@ public class YakShopController implements YakShopApi {
     @Override
     public ResponseEntity<Stock> order(Integer T, Order order) {
         OrderInternal orderInternal = OrderMapper.INSTANCE.toInternalModel(order);
-        StockInternal result = this.orderService.placeOrder(orderInternal, T);
-        log.info("Order Successful!");
-        return new ResponseEntity<>(StockMapper.INSTANCE.toApiModel(result), HttpStatus.CREATED);
+        StockInternal availableItems = this.orderService.placeOrder(orderInternal, T);
+        Stock response = StockMapper.INSTANCE.toApiModel(availableItems);
+
+        if (availableItems.emptyOrder()) {
+            log.info("No oder items are available - order not processed");
+            return ResponseEntity.notFound().build();
+        } else if (availableItems.hasNoMilk() && order.getStock().getMilk() != null ||
+                availableItems.hasNoSkins() && order.getStock().getSkins() != null) {
+            log.info("Partial order processed successfully!");
+            return new ResponseEntity<>(response, HttpStatus.PARTIAL_CONTENT);
+        }
+        log.info("Order processed successfully!");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

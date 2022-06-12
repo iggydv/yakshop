@@ -8,4 +8,15 @@ import lombok.Data;
 public class StockInternal {
     double milk;
     int skins;
+
+    public boolean emptyOrder() {
+        return hasNoSkins() && hasNoMilk();
+    }
+    public boolean hasNoMilk() {
+        return milk == 0.0;
+    }
+
+    public boolean hasNoSkins() {
+        return skins == 0;
+    }
 }

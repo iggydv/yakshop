@@ -35,7 +35,7 @@ public class HerdStorageImpl implements HerdStorage {
         return total;
     }
 
-    public int calculateTotalSkinsForPeriod(int T) {
+    private int calculateTotalSkinsForPeriod(int T) {
         int total = 0;
         for (LabYakInternal yak : herd) {
             int skins = yak.skinsProducedOverTime(T);

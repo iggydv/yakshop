@@ -2,13 +2,13 @@ package com.xebia.yakshop.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.xebia.yakshop.controllers.YakShopController;
 import com.xebia.yakshop.models.HerdStatus;
 import com.xebia.yakshop.models.LabYakRs;
 import com.xebia.yakshop.models.Order;
 import com.xebia.yakshop.models.Stock;
 import com.xebia.yakshop.storage.HerdStorageImpl;
 import com.xebia.yakshop.storage.OrderHistoryImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -94,10 +94,25 @@ class YakShopControllerTest {
     }
 
     @Test
-    void order_partial_response() throws Exception {
+    void orderWithPartialResponse() throws Exception {
         loadHerd();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String jsonRequest = ow.writeValueAsString(Order.builder().customer("Yak Man").stock(Stock.builder().milk(1200.00).skins(3).build()).build());
+        String jsonResponse = ow.writeValueAsString(Stock.builder().skins(3).build());
+
+        mockMvc.perform(post("/yak-shop/order/{T}", 14)
+                        .content(jsonRequest)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isPartialContent())
+                .andExpect(content().json(jsonResponse))
+                .andReturn();
+    }
+
+    @Test
+    void orderWithPartialRequest() throws Exception {
+        loadHerd();
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String jsonRequest = ow.writeValueAsString(Order.builder().customer("Yak Man").stock(Stock.builder().skins(3).build()).build());
         String jsonResponse = ow.writeValueAsString(Stock.builder().skins(3).build());
 
         mockMvc.perform(post("/yak-shop/order/{T}", 14)
@@ -109,17 +124,28 @@ class YakShopControllerTest {
     }
 
     @Test
-    void order_partial_request() throws Exception {
+    void orderWithAllItemsUndeliverable() throws Exception {
         loadHerd();
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String jsonRequest = ow.writeValueAsString(Order.builder().customer("Yak Man").stock(Stock.builder().skins(3).build()).build());
-        String jsonResponse = ow.writeValueAsString(Stock.builder().skins(3).build());
+        String jsonRequest = ow.writeValueAsString(Order.builder().customer("Yak Man").stock(Stock.builder().milk(1200.00).skins(10).build()).build());
 
         mockMvc.perform(post("/yak-shop/order/{T}", 14)
                         .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().json(jsonResponse))
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
+
+    @Test
+    void emptyOrder() throws Exception {
+        loadHerd();
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String jsonRequest = ow.writeValueAsString(Order.builder().customer("Yak Man").stock(Stock.builder().milk(0.0).skins(0).build()).build());
+
+        mockMvc.perform(post("/yak-shop/order/{T}", 14)
+                        .content(jsonRequest)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
                 .andReturn();
     }
 }

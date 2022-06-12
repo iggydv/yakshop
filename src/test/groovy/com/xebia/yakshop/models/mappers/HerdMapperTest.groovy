@@ -11,7 +11,7 @@ class HerdMapperTest extends Specification {
     @Subject
     private final HerdMapper mapper = new HerdMapper();
 
-    def "test empty mapping"() {
+    def "should correctly map an empty list"() {
         given:
         HerdStorageImpl result = mapper.toInternalModel(Collections.emptyList());
 
@@ -19,9 +19,9 @@ class HerdMapperTest extends Specification {
         assert result.getHerd() != null
     }
 
-    def "test to internal mapping one item"() {
+    def "should correctly map [labYak] -> HerdStorageImpl"() {
         given:
-        List<LabYakRq> external = List.of(LabYakRq.builder().age(1.1).name("Joe").sex(Sex.F).build())
+        List<LabYakRq> external = Collections.singletonList(LabYakRq.builder().age(1.1).name("Joe").sex(Sex.F).build())
 
         when:
         HerdStorageImpl result = mapper.toInternalModel(external);
@@ -34,7 +34,7 @@ class HerdMapperTest extends Specification {
         assert result.getHerd().get(0).getAgeLastShaved() == 0.0
     }
 
-    def "test to internal mapping multiple items"() {
+    def "should correctly map [labYak, labYak, labYak ...] -> HerdStorageImpl"() {
         given:
         List<LabYakRq> external = List.of(
                 LabYakRq.builder().age(3.0).name("Phoebe").sex(Sex.F).build(),
@@ -56,6 +56,5 @@ class HerdMapperTest extends Specification {
             assert result.getHerd().get(i).getSex().label == external.get(i).getSex().getValue()
             assert result.getHerd().get(i).getAgeLastShaved() == 0.0
         }
-
     }
 }

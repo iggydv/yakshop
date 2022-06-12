@@ -16,7 +16,7 @@ class HerdStorageImplTest extends Specification {
     @Subject
     private final HerdStorageImpl herdInternal = new HerdStorageImpl(herd);
 
-    def "Calculate Total Milk For Period"() {
+    def "should correctly calculate total amount of milk over period"() {
         when:
         double milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
 
@@ -30,7 +30,7 @@ class HerdStorageImplTest extends Specification {
         13 | 1104.48
     }
 
-    def "CalculateTotalSkinsForPeriod"() {
+    def "should correctly calculate total skins over period"() {
         when:
         double skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
 

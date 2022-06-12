@@ -1,6 +1,6 @@
 package com.xebia.yakshop.models.storage
 
-import com.xebia.yakshop.models.Stock
+
 import com.xebia.yakshop.models.StockInternal
 import com.xebia.yakshop.storage.OrderHistory
 import com.xebia.yakshop.storage.OrderHistoryImpl
@@ -15,7 +15,7 @@ class OrderHistoryImplTest extends Specification {
         orderHistory.reset()
     }
 
-    def "Get Skin Stock History - no history"() {
+    def "should successfully retrieve skin stock history with empty history"() {
         when:
         def total = orderHistory.getSkinOrderHistory()
 
@@ -23,7 +23,7 @@ class OrderHistoryImplTest extends Specification {
         assert total == 0
     }
 
-    def "Get Milk Stock History - no history"() {
+    def "should successfully retrieve milk stock history with empty history"() {
         when:
         def total = orderHistory.getMilkOrderHistory()
 
@@ -31,15 +31,7 @@ class OrderHistoryImplTest extends Specification {
         assert total == 0.0
     }
 
-    def "Get Skin Stock History"() {
-        when:
-        def total = orderHistory.getSkinOrderHistory()
-
-        then:
-        assert total == 0
-    }
-
-    def "Get Stock History"() {
+    def "should successfully retrieve stock history"() {
         given:
         orderHistory.addOrder("jack", StockInternal.builder().milk(100.00).skins(1).build())
         orderHistory.addOrder("sam", StockInternal.builder().milk(200.00).skins(2).build())
@@ -55,7 +47,7 @@ class OrderHistoryImplTest extends Specification {
         assert totalSkins == 7
     }
 
-    def "AddOrder"() {
+    def "should be able to add an order to the order history"() {
         given:
         orderHistory.addOrder("jack", StockInternal.builder().milk(100.00).skins(1).build())
         orderHistory.addOrder("sam", StockInternal.builder().milk(200.00).skins(2).build())

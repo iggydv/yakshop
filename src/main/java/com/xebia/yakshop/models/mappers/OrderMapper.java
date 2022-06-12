@@ -2,8 +2,6 @@ package com.xebia.yakshop.models.mappers;
 
 import com.xebia.yakshop.models.Order;
 import com.xebia.yakshop.models.OrderInternal;
-import com.xebia.yakshop.models.Stock;
-import com.xebia.yakshop.models.StockInternal;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
