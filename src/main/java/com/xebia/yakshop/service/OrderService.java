@@ -2,8 +2,8 @@ package com.xebia.yakshop.service;
 
 import com.xebia.yakshop.models.OrderInternal;
 import com.xebia.yakshop.models.StockInternal;
-import com.xebia.yakshop.storage.HerdStorageImpl;
-import com.xebia.yakshop.storage.OrderHistoryImpl;
+import com.xebia.yakshop.storage.HerdStorage;
+import com.xebia.yakshop.storage.OrderHistoryStorage;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Data
 @Service
 public class OrderService {
-    private HerdStorageImpl herd;
-    private OrderHistoryImpl orderHistory;
+    private HerdStorage herd;
+    private OrderHistoryStorage orderHistory;
 
     @Autowired
-    public OrderService(HerdStorageImpl herd, OrderHistoryImpl orderHistory) {
+    public OrderService(HerdStorage herd, OrderHistoryStorage orderHistory) {
         this.herd = herd;
         this.orderHistory = orderHistory;
     }

@@ -7,7 +7,7 @@ import spock.lang.Subject
 
 class StockMapperTest extends Specification {
     @Subject
-    def mapper = new StockMapperImpl()
+    private final StockMapper mapper = new StockMapperImpl()
 
     def "test empty mappings"() {
         given:

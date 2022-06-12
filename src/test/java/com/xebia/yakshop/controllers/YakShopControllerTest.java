@@ -1,14 +1,15 @@
-package com.xebia.yakshop.service;
+package com.xebia.yakshop.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.xebia.yakshop.controllers.YakShopController;
 import com.xebia.yakshop.models.HerdStatus;
 import com.xebia.yakshop.models.LabYakRs;
 import com.xebia.yakshop.models.Order;
 import com.xebia.yakshop.models.Stock;
+import com.xebia.yakshop.service.HerdService;
+import com.xebia.yakshop.service.OrderService;
 import com.xebia.yakshop.storage.HerdStorageImpl;
-import com.xebia.yakshop.storage.OrderHistoryImpl;
+import com.xebia.yakshop.storage.OrderHistoryStorageImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {YakShopController.class, OrderService.class, HerdStorageImpl.class, OrderHistoryImpl.class})
+@ContextConfiguration(classes = {YakShopController.class, HerdService.class, OrderService.class, HerdStorageImpl.class, OrderHistoryStorageImpl.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @WebMvcTest(YakShopController.class)
 class YakShopControllerTest {

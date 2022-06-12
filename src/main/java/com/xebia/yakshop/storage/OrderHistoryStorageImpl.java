@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 
@@ -14,7 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class OrderHistoryImpl implements OrderHistory {
+public class OrderHistoryStorageImpl implements OrderHistoryStorage {
     @Builder.Default
     LinkedMultiValueMap<String, StockInternal> orders = new LinkedMultiValueMap<>();
 

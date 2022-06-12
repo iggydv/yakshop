@@ -2,14 +2,14 @@ package com.xebia.yakshop.models.storage
 
 
 import com.xebia.yakshop.models.StockInternal
-import com.xebia.yakshop.storage.OrderHistory
-import com.xebia.yakshop.storage.OrderHistoryImpl
+import com.xebia.yakshop.storage.OrderHistoryStorage
+import com.xebia.yakshop.storage.OrderHistoryStorageImpl
 import spock.lang.Specification
 import spock.lang.Subject
 
-class OrderHistoryImplTest extends Specification {
+class OrderHistoryStorageImplTest extends Specification {
     @Subject
-    private final OrderHistory orderHistory = new OrderHistoryImpl()
+    private final OrderHistoryStorage orderHistory = new OrderHistoryStorageImpl()
 
     def setup() {
         orderHistory.reset()
@@ -56,7 +56,6 @@ class OrderHistoryImplTest extends Specification {
 
         when:
         orderHistory.addOrder("susan", StockInternal.builder().milk(400.00).skins(3).build())
-        System.out.println(orderHistory.getOrders().values())
         def keySetSize = orderHistory.getOrders().keySet().size()
         def susanValuesSize = orderHistory.getOrders().get("susan").size()
 

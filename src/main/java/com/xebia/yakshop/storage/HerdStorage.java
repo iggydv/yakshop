@@ -1,8 +1,15 @@
 package com.xebia.yakshop.storage;
 
+import com.xebia.yakshop.models.LabYakInternal;
 import com.xebia.yakshop.models.StockInternal;
 
+import java.util.List;
+
 public interface HerdStorage {
+
+    void setHerd(List<LabYakInternal> herd);
+
+    List<LabYakInternal> getHerd();
 
     /**
      * Calculate the herd's total stock (milk & skin production) over the period T

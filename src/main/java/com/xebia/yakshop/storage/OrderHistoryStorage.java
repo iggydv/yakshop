@@ -2,7 +2,7 @@ package com.xebia.yakshop.storage;
 
 import com.xebia.yakshop.models.StockInternal;
 
-public interface OrderHistory {
+public interface OrderHistoryStorage {
     /**
      * Retrieve skin order history
      *

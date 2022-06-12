@@ -7,11 +7,11 @@ import spock.lang.Subject
 
 class OrderMapperTest extends Specification {
     @Subject
-    OrderMapper mapper = new OrderMapperImpl();
+    private final OrderMapper mapper = new OrderMapperImpl();
 
     def "should correctly map an empty object"() {
         given:
-        Order order = Order.builder().build()
+        def order = Order.builder().build()
 
         when:
         def result = mapper.toInternalModel(order)
@@ -23,7 +23,7 @@ class OrderMapperTest extends Specification {
 
     def "should correctly map Order -> OrderInternal"() {
         given:
-        Order order = Order.builder().customer("jack").stock(Stock.builder().milk(10.0).skins(3).build()).build()
+        def order = Order.builder().customer("jack").stock(Stock.builder().milk(10.0).skins(3).build()).build()
 
         when:
         def result = mapper.toInternalModel(order)

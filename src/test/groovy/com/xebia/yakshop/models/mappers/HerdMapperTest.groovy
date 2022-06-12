@@ -9,7 +9,7 @@ import spock.lang.Subject
 class HerdMapperTest extends Specification {
 
     @Subject
-    private final HerdMapper mapper = new HerdMapper();
+    private final HerdMapper mapper = HerdMapper.getInstance()
 
     def "should correctly map an empty list"() {
         given:
@@ -36,7 +36,7 @@ class HerdMapperTest extends Specification {
 
     def "should correctly map [labYak, labYak, labYak ...] -> HerdStorageImpl"() {
         given:
-        List<LabYakRq> external = List.of(
+        def external = List.of(
                 LabYakRq.builder().age(3.0).name("Phoebe").sex(Sex.F).build(),
                 LabYakRq.builder().age(2.0).name("Joey").sex(Sex.M).build(),
                 LabYakRq.builder().age(2.2).name("Ross").sex(Sex.M).build(),
@@ -45,7 +45,7 @@ class HerdMapperTest extends Specification {
                 LabYakRq.builder().age(2.3).name("Chandler").sex(Sex.M).build());
 
         when:
-        HerdStorageImpl result = mapper.toInternalModel(external);
+        def result = mapper.toInternalModel(external);
 
         then:
         assert result.getHerd().size() == 6

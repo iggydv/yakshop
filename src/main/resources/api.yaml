@@ -52,8 +52,6 @@ paths:
                 $ref: '#/components/schemas/stock'
         '400':
           description: invalid input
-        '404':
-          description: object does not exist
 
   /yak-shop/herd/{T}:
     get:
@@ -79,8 +77,6 @@ paths:
                 $ref: '#/components/schemas/herdStatus'
         '400':
           description: invalid input
-        '404':
-          description: object does not exist
 
   /yak-shop/order/{T}:
     post:

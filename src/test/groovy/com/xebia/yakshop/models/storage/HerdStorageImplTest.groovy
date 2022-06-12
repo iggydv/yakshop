@@ -18,7 +18,7 @@ class HerdStorageImplTest extends Specification {
 
     def "should correctly calculate total amount of milk over period"() {
         when:
-        double milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
+        def milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
 
         then:
         assert milkTotal == expected
@@ -32,7 +32,7 @@ class HerdStorageImplTest extends Specification {
 
     def "should correctly calculate total skins over period"() {
         when:
-        double skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
+        def skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
 
         then:
         assert skinTotal == expected

@@ -47,5 +47,4 @@ public class HerdStorageImpl implements HerdStorage {
     public void calculateAgeLastShaved(int T) {
         herd.forEach(labYakInternal -> labYakInternal.calculateAgeLastShaved(T));
     }
-
 }

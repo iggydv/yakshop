@@ -14,7 +14,7 @@ class LabYakMapperTest extends Specification {
 
     def "should correctly map LabYakInternal -> LabYakRq"() {
         given:
-        LabYakInternal internal = LabYakInternal.builder().age(1.0).name("Joe").sex(SexInternal.F).ageLastShaved(0.0).build()
+        def internal = LabYakInternal.builder().age(1.0).name("Joe").sex(SexInternal.F).ageLastShaved(0.0).build()
 
         when:
         LabYakRq result = mapper.toApiModel(internal)
@@ -30,7 +30,7 @@ class LabYakMapperTest extends Specification {
         def yak = LabYakRq.builder().age(1.0).name("Joe").sex(Sex.M).build()
 
         when:
-        LabYakInternal result = mapper.toInternalModel(yak)
+        def result = mapper.toInternalModel(yak)
 
         then:
         assert result.getAge() == yak.getAge()
