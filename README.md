@@ -29,6 +29,13 @@ mvn clean package
 ```
 This will download and build all the required project dependencies and package it as a JAR file.
 
+## Testing YakShop locally
+
+In order to run all groovy and junit + webmvc tests, the following commands can be used:
+```shell
+mvn verify
+```
+
 ### Running YakShop locally
 
 To run the application, simply use following command:
