@@ -172,6 +172,12 @@
 			<version>2.0-groovy-3.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 
@@ -181,6 +187,30 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.5</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<fileset>
+									<directory>${pom.basedir}/src/test/groovy</directory>
+									<includes>
+										<include>**/*.groovy</include>
+									</includes>
+								</fileset>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -248,7 +278,7 @@
 							<inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
 							<modelPackage>com.xebia.yakshop.models</modelPackage>
 							<configOptions>
-								<additionalModelTypeAnnotations>@lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor</additionalModelTypeAnnotations>
+								<additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) @lombok.Builder @lombok.NoArgsConstructor @lombok.AllArgsConstructor</additionalModelTypeAnnotations>
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<interfaceOnly>true</interfaceOnly>
 								<delegatePattern>true</delegatePattern>

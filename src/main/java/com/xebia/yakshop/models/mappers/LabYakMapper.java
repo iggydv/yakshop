@@ -1,6 +1,7 @@
 package com.xebia.yakshop.models.mappers;
 
 import com.xebia.yakshop.models.LabYakInternal;
+
 import com.xebia.yakshop.models.LabYakRq;
 import com.xebia.yakshop.models.LabYakRs;
 import org.mapstruct.Mapper;
@@ -14,7 +15,6 @@ public interface LabYakMapper {
     LabYakMapper INSTANCE = Mappers.getMapper(LabYakMapper.class);
 
     LabYakRq toApiModel(LabYakInternal source);
-
     LabYakInternal toInternalModel(LabYakRq source);
 
     default LabYakRs toApiResponseModel(LabYakInternal source, int T) {

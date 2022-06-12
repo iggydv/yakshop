@@ -1,9 +1,12 @@
-package com.xebia.yakshop.models
+package com.xebia.yakshop.models.storage
 
+import com.xebia.yakshop.models.LabYakInternal
+import com.xebia.yakshop.models.SexInternal
+import com.xebia.yakshop.storage.HerdStorageImpl
 import spock.lang.Specification
 import spock.lang.Subject
 
-class HerdInternalTest extends Specification {
+class HerdStorageImplTest extends Specification {
 
     private final List<LabYakInternal> herd = List.of(
             LabYakInternal.builder().age(4.0).name("Betty-1").sex(SexInternal.F).build(),
@@ -11,11 +14,11 @@ class HerdInternalTest extends Specification {
             LabYakInternal.builder().age(9.5).name("Betty-3").sex(SexInternal.F).build())
 
     @Subject
-    private final HerdInternal herdInternal = new HerdInternal(herd);
+    private final HerdStorageImpl herdInternal = new HerdStorageImpl(herd);
 
-    def "Calculate Total Milk For Period"() {
+    def "should correctly calculate total amount of milk over period"() {
         when:
-        double milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
+        def milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
 
         then:
         assert milkTotal == expected
@@ -27,9 +30,9 @@ class HerdInternalTest extends Specification {
         13 | 1104.48
     }
 
-    def "CalculateTotalSkinsForPeriod"() {
+    def "should correctly calculate total skins over period"() {
         when:
-        double skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
+        def skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
 
         then:
         assert skinTotal == expected

@@ -12,9 +12,9 @@ class LabYakMapperTest extends Specification {
     @Subject
     private final LabYakMapper mapper = new LabYakMapperImpl();
 
-    void "test mapping from internal to API model"() {
+    def "should correctly map LabYakInternal -> LabYakRq"() {
         given:
-        LabYakInternal internal = LabYakInternal.builder().age(1.0).name("Joe").sex(SexInternal.F).ageLastShaved(0.0).build()
+        def internal = LabYakInternal.builder().age(1.0).name("Joe").sex(SexInternal.F).ageLastShaved(0.0).build()
 
         when:
         LabYakRq result = mapper.toApiModel(internal)
@@ -25,18 +25,17 @@ class LabYakMapperTest extends Specification {
         assert internal.getSex().label == result.getSex().getValue()
     }
 
-    void "test mapping from API model to internal model"() {
+    def "should correctly map LabYakRq -> LabYakInternal"() {
+        given:
+        def yak = LabYakRq.builder().age(1.0).name("Joe").sex(Sex.M).build()
+
         when:
-        LabYakInternal result = mapper.toInternalModel(yak)
+        def result = mapper.toInternalModel(yak)
 
         then:
-        assert result.getAge() == expectedAge
-        assert result.getName() == expectedName
-        assert result.getSex().label == expectedSex.getValue()
+        assert result.getAge() == yak.getAge()
+        assert result.getName() == yak.getName()
+        assert result.getSex().label == yak.getSex().getValue()
         assert result.getAgeLastShaved() == 0.0
-
-        where:
-        yak                                                        | expectedAge  | expectedName  | expectedSex
-        LabYakRq.builder().age(1.0).name("Joe").sex(Sex.M).build() | yak.getAge() | yak.getName() | yak.getSex()
     }
 }

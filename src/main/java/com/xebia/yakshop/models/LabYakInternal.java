@@ -14,7 +14,7 @@ public class LabYakInternal {
     @NonNull
     final SexInternal sex;
     @NonNull
-    double age;
+    Double age;
     @Builder.Default
     double ageLastShaved = 0.0;
 
@@ -71,7 +71,7 @@ public class LabYakInternal {
         double yakAgeDays = getCurrentAge(today);
         if (yakAgeDays >= 100.0 && yakAgeDays < 1000.0) {
             calculateAgeLastShaved(today);
-            return yakAgeDays == getAgeInDays(this.ageLastShaved);
+            return yakAgeDays == round(getAgeInDays(this.ageLastShaved));
         }
         return false;
     }
