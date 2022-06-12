@@ -14,33 +14,13 @@ class HerdStorageImplTest extends Specification {
             LabYakInternal.builder().age(9.5).name("Betty-3").sex(SexInternal.F).build())
 
     @Subject
-    private final HerdStorageImpl herdInternal = new HerdStorageImpl(herd);
+    private final HerdStorageImpl herdInternal = new HerdStorageImpl()
 
-    def "should correctly calculate total amount of milk over period"() {
+    def "should set the herd"() {
         when:
-        def milkTotal = herdInternal.calculateTotalMilkForPeriod(T)
+        herdInternal.setHerd(herd)
 
         then:
-        assert milkTotal == expected
-
-        where:
-        T  | expected
-        0  | 0.0
-        1  | 85.5
-        13 | 1104.48
-    }
-
-    def "should correctly calculate total skins over period"() {
-        when:
-        def skinTotal = herdInternal.calculateTotalSkinsForPeriod(T)
-
-        then:
-        assert skinTotal == expected
-
-        where:
-        T  | expected
-        0  | 0
-        1  | 3
-        13 | 3
+        assert herdInternal.getHerd().size() == 3
     }
 }

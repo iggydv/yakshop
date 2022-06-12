@@ -12,7 +12,6 @@ import com.xebia.yakshop.models.mappers.StockMapper;
 import com.xebia.yakshop.service.HerdService;
 import com.xebia.yakshop.service.OrderService;
 import com.xebia.yakshop.storage.HerdStorage;
-import com.xebia.yakshop.storage.HerdStorageImpl;
 import lombok.extern.log4j.Log4j2;
 import org.openapitools.api.YakShopApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ import java.util.List;
 @Log4j2
 public class YakShopController implements YakShopApi {
 
-    private HerdService herdService;
+    private final HerdService herdService;
     private final OrderService orderService;
 
     @Autowired
@@ -43,6 +42,7 @@ public class YakShopController implements YakShopApi {
         try {
             HerdStorage herd = HerdMapper.getInstance().toInternalModel(herdRq);
             herdService.loadHerd(herd);
+            orderService.reset();
             log.info("New herd loaded: {}", herd);
         } catch (Exception e) {
             log.error("Invalid load herd request: {}", e.getMessage());
@@ -77,7 +77,8 @@ public class YakShopController implements YakShopApi {
     @Override
     public ResponseEntity<Stock> order(Integer T, Order order) {
         OrderInternal orderInternal = OrderMapper.INSTANCE.toInternalModel(order);
-        StockInternal availableItems = this.orderService.placeOrder(orderInternal, T);
+        StockInternal expectedStock = herdService.calculateStock(T);
+        StockInternal availableItems = orderService.placeOrder(orderInternal, expectedStock, T);
         Stock response = StockMapper.INSTANCE.toApiModel(availableItems);
 
         if (availableItems.emptyOrder()) {
@@ -93,7 +94,7 @@ public class YakShopController implements YakShopApi {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<String> rootResponse() {
+    public ResponseEntity<String> greet() {
         String welcomeMessage = "Welcome to YakShop - Currently the site is still under construction. \nFeel free to explore our API at http://localhost:8080/swagger-ui/index.html#/";
         return new ResponseEntity<>(welcomeMessage, HttpStatus.OK);
     }

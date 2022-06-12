@@ -63,9 +63,16 @@ to run the container-image use
 docker run -p 8080:8080 -t iggydv12/yakshop
 ```
 
-## API 
+## YakShop API
 
-**Load new herd**
+Once the application is up and running, the swagger API can be visited at http://localhost:8080/swagger-ui/index.html#/
+
+The purpose of the application is to allow a heard of LabYaks to be loaded into the application via HTTP POST. 
+Once the herd is loaded it can be queried and orders can be placed against the available stock.
+
+Alternatively API endpoints can be accessed using curl commands.
+
+**Load new herd:**
 ```shell
 curl -X 'POST' \
   'http://localhost:8080/yak-shop/load' \

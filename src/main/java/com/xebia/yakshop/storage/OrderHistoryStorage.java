@@ -6,14 +6,12 @@ public interface OrderHistoryStorage {
     /**
      * Retrieve skin order history
      *
-     * @return
      */
     int getSkinOrderHistory();
 
     /**
      * Retrieve milk order history
      *
-     * @return
      */
     double getMilkOrderHistory();
 

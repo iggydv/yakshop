@@ -71,33 +71,10 @@ public class LabYakInternal {
         double yakAgeDays = getCurrentAge(today);
         if (yakAgeDays >= 100.0 && yakAgeDays < 1000.0) {
             calculateAgeLastShaved(today);
-            return yakAgeDays == round(getAgeInDays(this.ageLastShaved));
+            return yakAgeDays == getAgeInDays(this.ageLastShaved);
         }
         return false;
     }
-
-//    public int hidesProducedOverTime2(int day, int skins) {
-//        int hides = 0;
-//
-//        // No days have passed
-//        if (day == 0) {
-//            return hides;
-//        }
-//        double currentYakAge = getCurrentAge(day - 1);
-//
-//        // calculate the centennial age of the yak i.e. 100, 200, 300 etc
-//        if (currentYakAge >= 100.0 && currentYakAge < 1000.0) {
-//            // spans multiple algorithms
-//            if (currentYakAge - getAgeInDays() > 100) {
-//                double a = currentYakAge / 100.0;
-//                hidesProducedOverTime2()
-//            }
-//            int shaveIncrementForAge = shaveIncrement(currentYakAge);
-//            calculateAgeLastShaved(currentYakAge);
-//            hides = (int) Math.floor((currentYakAge - getAgeInDays()) / shaveIncrementForAge) + 1;
-//        }
-//        return hides;
-//    }
 
     public int shaveIncrement(double currentAge) {
         // each 100 days the shave interval changes
@@ -134,11 +111,11 @@ public class LabYakInternal {
     }
 
     public double getAgeInDays() {
-        return age * 100.00;
+        return round(age * 100.00);
     }
 
     public double getAgeInDays(double yakYears) {
-        return yakYears * 100.00;
+        return round(yakYears * 100.00);
     }
 
     private double round(double num) {

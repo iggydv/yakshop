@@ -11,17 +11,15 @@ import org.springframework.stereotype.Service;
 @Data
 @Service
 public class OrderService {
-    private HerdStorage herd;
     private OrderHistoryStorage orderHistory;
 
     @Autowired
-    public OrderService(HerdStorage herd, OrderHistoryStorage orderHistory) {
-        this.herd = herd;
+    public OrderService(OrderHistoryStorage orderHistory) {
         this.orderHistory = orderHistory;
     }
 
-    public StockInternal placeOrder(OrderInternal order, int day) {
-        StockInternal expectedStock = herd.calculateStock(day);
+    public StockInternal placeOrder(OrderInternal order, StockInternal expectedStock, int day) {
+//        StockInternal expectedStock = herd.calculateStock(day);
         double milkStock = expectedStock.getMilk();
         int skinStock = expectedStock.getSkins();
 
@@ -49,5 +47,9 @@ public class OrderService {
 
         orderHistory.addOrder(order.getCustomer(), updatedStock.build());
         return result.build();
+    }
+
+    public void reset() {
+        orderHistory.reset();
     }
 }
