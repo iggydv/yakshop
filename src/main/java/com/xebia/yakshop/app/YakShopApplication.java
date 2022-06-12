@@ -1,6 +1,5 @@
 package com.xebia.yakshop.app;
 
-//import io.swagger.annotations.SwaggerDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
